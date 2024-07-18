@@ -18,18 +18,6 @@ F : FOR Loop
 E : Expression  
 T : Token (can be letter or number)  
   
-F -> <FOR> '(' D ';' C ';' S1 ')' F1 | <FOR> '(' ';' C ';' S1 ')' F1 |<FOR> '(' D ';' ';' S1 ')'  
-F1 | <FOR> '(' ';' ';' S1 ')' F1  
-F1 -> S1 ';' | '{' S '}' | F   
-S -> S1 ';' S | F S |   
-S1 -> A | E | D |   
-D -> <DATATYPE> <IDEN> | <DATATYPE> <IDEN> '=' E   
-A -> <IDEN> '=' E   
-E -> E '+' E | E '-' E | E '*' E | E '/' E | '-''-'E | '+''+'E | E'+''+' | E'-''-' | T   
-C -> T <RELOP> T  
-T -> <NUM> | <IDEN>   
-  
-  
 OUTPUTS:  
 Case 1)  
 I/p: for(int y = 0; y>3; y++) for(int x = 6; x>10; --x) {int a = 3; for(float b = 1; b<25; b = b*a){}}  
