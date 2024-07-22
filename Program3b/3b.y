@@ -16,19 +16,21 @@ int num;
 %left '*' '/'
 
 %%
-F : DATATYPE IDEN '(' FDEFS ')' F1  
-	{printf("\nFunction name: %s\nDatatype:%s\nNo. of args:%d\n",$2,$1,$4);
-	no_of_args=0;};
+F : {no_of_args=0;} DATATYPE IDEN '(' FDEFS ')' F1  
+	{printf("\nFunction name: %s\nDatatype:%s\nNo. of args:%d\n",$3,$2,$5);};
 F1 : ';' F2 | '{' S '}' F2 ;
 F2 : F | ;  //either continue scanning for functions or stop
-FDEFS : DATATYPE IDEN FDEFS1  {no_of_args++; $$=no_of_args; } // printf("\n%s %s",$1, $2);}
- 	| {$$=0;};
+FDEFS : {no_of_args++;} DATATYPE IDEN FDEFS1  { $$=no_of_args; } // printf("\n%s %s",$1, $2);}
+ 	| {
+	if (no_of_args>0) 
+	{yyerror("comma detected after function");}   //added method to check for empty string after comma in function definition
+	$$=0;};
 FDEFS1 : ',' FDEFS 
-	| {no_of_args=0;} ;
+	| ;
 S : S1 ';' S | ;
 S1 : A | D | E | ;
 D : DATATYPE IDEN | DATATYPE A ;
-A : IDEN '=' E ;
+A : IDEN '=' E | IDEN '=' E ',' A;
 E : E '+' E | E '-' E | E '*' E | E '/' E | '-''-'E |'+''+'E | E'+''+' |E'-''-' | T;
 T : NUM | IDEN;
 %%
