@@ -1,4 +1,5 @@
-Write a YACC program that reads C statements from an input file and converts them into three address code representation.
+Write a YACC program that reads C statements from an input file and converts them into intermediate code representation.  
+(solution should output triples, quadruples and three address representation)  
 
 Given a statement : a = b*c - 10  
 
