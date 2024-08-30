@@ -51,15 +51,10 @@ yyparse();
 }
 
 char *get_t_val(){
-	char charStr[2] = "t";
-	char numStr[11];  // number fits within int range
-	snprintf(numStr, sizeof(numStr), "%d", t_count);
+	char *res = (char*)malloc(13);
+	snprintf(res, 13, "t%d",t_count);
 	t_count++;
-    	// Concatenate the strings
-	char *result = (char*)malloc(13 * sizeof(char)); //12+1
-	strcpy(result, charStr);
-	strcat(result, numStr);	
-	return result;
+	return res;
 }
 //quadruples (op, arg1, arg2, res)
 void output(char *op, char *a1, char *a2, char *res){
