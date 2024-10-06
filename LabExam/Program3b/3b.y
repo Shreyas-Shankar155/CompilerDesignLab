@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-int loop_count = 0;
+int max_depth = 0;
 %}
 
 %token NUM IDEN
@@ -16,7 +16,7 @@ int loop_count = 0;
 %%
 S : S1 ';' S {$$=$3;}| 
 	F S {$$= ($1>$2) ? $1 : $2; 
-		if($$>loop_count) loop_count=$$;} | 
+		if($$>max_depth) max_depth=$$;} | 
      {$$=0;} ; //empty production
 	
 F : FOR '(' D ';' C ';' S1 ')' F1  { $$=$9+1; } |
@@ -37,8 +37,8 @@ int main(){
 FILE *input = fopen("input.c","r");
 yyrestart(input);
 yyparse();
-printf("Max Depth: %d\n",loop_count);
-if(loop_count<3)
+printf("Max Depth: %d\n",max_depth);
+if(max_depth<3)
 	printf("Input is invalid\n");
 else printf("Valid input\n");
 return 0;
